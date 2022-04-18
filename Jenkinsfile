@@ -3,7 +3,7 @@ pipeline {
      stages {
          stage('Testing') {
               steps {
-                 echo "Welcome to Jenkins Pipeline Testing"
+                 sh "bash build.sh"  
                  sh "ls -al"
               }
          }
