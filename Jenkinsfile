@@ -5,6 +5,7 @@ pipeline {
               steps {
                  sh "bash build.sh"  
                  sh "ls -al"
+                 echo ${BUILD_NUMBER}
               }
          }
      }
