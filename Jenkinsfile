@@ -1,9 +1,7 @@
 pipeline {
      agent any
      environment {
-        def DDESTROY = 'NO'
-        def BBUILD = 'NO'
-        registry = 'sreeharshav/devopsb20'
+        registry = 'ravitejachowdary/jenkins-pipeline'
         registryCredential = 'dockerhub_id'
         dockerImage = ''
     }
