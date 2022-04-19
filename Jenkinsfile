@@ -4,6 +4,7 @@ pipeline {
         registry = 'ravitejachowdary/jenkins-pipeline'
         registryCredential = 'dockerhub_id'
         dockerImage = ''
+        BUILD = 'NO'
     }
      stages {
          stage('Building Java Code') {
@@ -36,12 +37,29 @@ pipeline {
             }
         }
         stage('Perform Packer Build') {
+            when {
+                expression {
+                    env.BUILD == 'YES'
+                }
             steps {
                     sh 'packer build -var-file packer-vars.json packer.json | tee output.txt'
                     sh "tail -2 output.txt | head -2 | awk 'match(\$0, /ami-.*/) { print substr(\$0, RSTART, RLENGTH) }' > ami.txt"
                     sh "echo \$(cat ami.txt) > ami.txt"
                     script {
                         def AMIID = readFile('ami.txt').trim()
+                        sh "echo variable \\\"imagename\\\" { default = \\\"$AMIID\\\" } >> variables.tf"
+                    }
+            }
+        }
+        stage('Use Default Packer Image') {
+            when {
+                expression {
+                    env.BUILD == 'NO'
+                }
+            }
+            steps {
+                    script {
+                        def AMIID = 'ami-09ff810e7db18039d'
                         sh "echo variable \\\"imagename\\\" { default = \\\"$AMIID\\\" } >> variables.tf"
                     }
             }
