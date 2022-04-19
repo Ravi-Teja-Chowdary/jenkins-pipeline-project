@@ -50,7 +50,8 @@ pipeline {
                         sh "echo variable \\\"imagename\\\" { default = \\\"$AMIID\\\" } >> variables.tf"
                     }
             }
-        }
+          }
+       }
         stage('Use Default Packer Image') {
             when {
                 expression {
@@ -64,5 +65,5 @@ pipeline {
                     }
             }
         }
-     }
+    }
 }
