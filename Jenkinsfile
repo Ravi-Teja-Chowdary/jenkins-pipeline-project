@@ -35,5 +35,11 @@ pipeline {
                 }
             }
         }
+        stage('Checking the versions of both packer and terraform') {
+            steps {
+               sh 'packer version'
+               sh 'terraform version'
+            }
+        }
      }
 }
