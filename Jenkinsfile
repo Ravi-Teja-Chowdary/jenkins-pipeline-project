@@ -4,7 +4,7 @@ pipeline {
         registry = 'ravitejachowdary/jenkins-pipeline'
         registryCredential = 'dockerhub_id'
         dockerImage = ''
-        BUILD = 'NO'
+        BUILD = 'YES'
     }
      stages {
          stage('Building Java Code') {
@@ -68,5 +68,5 @@ pipeline {
         }
 
         }
-}
+    }
 }
