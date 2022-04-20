@@ -26,7 +26,7 @@ pipeline {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 }
             }
-        }
+         }
         stage('Push the Docker image') {
             steps {
                 script {
@@ -35,15 +35,14 @@ pipeline {
                     }
                 }
             }
-        }
+         }
         stage('Perform Packer Build') {
             when {
                 expression {
                     env.BUILD == 'YES'
                 }
+            }
             steps {
-               sh 'packer version'
-               sh 'terraform version'
                     sh 'packer build -var-file packer-vars.json packer.json | tee output.txt'
                     sh "tail -2 output.txt | head -2 | awk 'match(\$0, /ami-.*/) { print substr(\$0, RSTART, RLENGTH) }' > ami.txt"
                     sh "echo \$(cat ami.txt) > ami.txt"
@@ -52,7 +51,7 @@ pipeline {
                         sh "echo variable \\\"imagename\\\" { default = \\\"$AMIID\\\" } >> variables.tf"
                     }
             }
-        }
+          }
         stage('Use Default Packer Image') {
             when {
                 expression {
@@ -69,4 +68,3 @@ pipeline {
 
         }
     }
-}
