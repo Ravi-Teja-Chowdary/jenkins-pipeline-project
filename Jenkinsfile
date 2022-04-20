@@ -4,7 +4,7 @@ pipeline {
         registry = 'ravitejachowdary/jenkins-pipeline'
         registryCredential = 'dockerhub_id'
         dockerImage = ''
-        BUILD = 'YES'
+        BUILD = 'NO'
     }
      stages {
          stage('Building Java Code') {
@@ -60,7 +60,7 @@ pipeline {
             }
             steps {
                     script {
-                        def AMIID = 'ami-09ff810e7db18039d'
+                        def AMIID = 'ami-0f4959b6a57634dfa'
                         sh "echo variable \\\"imagename\\\" { default = \\\"$AMIID\\\" } >> variables.tf"
                     }
             }
